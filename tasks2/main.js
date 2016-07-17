@@ -20,7 +20,7 @@ async.series([
     function (callback) {
         debug('读取电影的分类列表开始');
         read.category(url, function (err, items) {
-            categories = items;
+            categories = items;//只有百度提取出来的ID，没有数据库生成的ID
             debug('读取电影的分类列表结束');
             callback();
         })
@@ -40,8 +40,10 @@ async.series([
         //读取电影列表并把电影信息赋给 movies
         debug('读取电影的列表');
         async.forEach(categories,function(category,cb){
+            //url是此分类下面的电影的列表网址
             read.movie(category.url,category._id,function (err, items) {
                 movies = movies.concat(items);
+                console.log(movies);
                 cb();
             });
         },callback)
