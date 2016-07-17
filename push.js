@@ -12,10 +12,20 @@ var job = new CronJob('50 28 * * * *',function(){
     });
 });
 job.start();*/
-exec('git add -A',function(err,stdout,stderr){
+/*exec('git add -A',function(err,stdout,stderr){
     exec('git commit -m"'+str+'"',function(err,stdout,stderr){
         exec('git push origin master',function(err,stdout,stderr){
             console.log('提交完毕');
+        });
+    });
+});*/
+
+process.stdin.on('data',function(data){
+    exec('git add -A',function(err,stdout,stderr){
+        exec('git commit -m"'+data.toString()+'"',function(err,stdout,stderr){
+            exec('git push origin master',function(err,stdout,stderr){
+                console.log('提交完毕');
+            });
         });
     });
 });
