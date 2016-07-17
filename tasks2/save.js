@@ -35,16 +35,12 @@ exports.movie = function(items,callback){
             debug('电影列表删除完毕');
         },
         //所有的电影保存到数据库中
-        function(call){
+        function(callback){
             //循环数组中每个元素，把它们依次保存到数据库中
-            console.error(items);
             async.forEach(items,function(item,cb){
-                db.Movie.create(item,function(err,result){
-                    console.error(err);
-                    cb();
-                });
+                db.Movie.create(item,cb);
                 debug('保存电影:'+item.name);
-            },call)
+            },callback)
         }
     ],function(err,result){
         debug('保存电影完毕');
