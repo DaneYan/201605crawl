@@ -46,7 +46,7 @@ app.get('/',function(req,res){
 });
 app.listen(9090);
 
-var CronJob = new require('cron').CronJob();
+var CronJob = new require('cron').CronJob;
 var job = new CronJob('0 */5 * * * * ',function(){
     var spawn = require('child_process').spawn;
     // node.exe 的绝对路径  node tasks2/main.js
