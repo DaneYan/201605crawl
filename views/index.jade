@@ -4,14 +4,16 @@ html
         link(rel="stylesheet",href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css")
         style.
             body{margin-top:50px}
+            .active a{color:white}
     body
         .container
             .row
                 .col-md-4
                     ul.list-group
-                        li.list-group-item.active 全部电影
-                        li.list-group-item 爱情电影
+                        each category in categories
+                            li.list-group-item(class="#{cid==category._id?'active':''}")
+                                a(href="/#{category._id}")=category.name
                 .col-md-8
                     ul.list-group
-                        li.list-group-item.active 大鱼海棠
-                        li.list-group-item 摇滚藏獒
+                        each movie in movies
+                            li.list-group-item=movie.name
