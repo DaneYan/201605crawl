@@ -24,7 +24,8 @@ exports.category = function(url,callback){
                 url:$me.attr('href')//电影对应的链接 './buzz?b=26&c=1'
             }
             var result = item.url.match(/b=(\d+)/);
-            item.id= result[1];
+            item._id= result[1];//把ID作为数据库里的文档ID
+            //此url用来进行下一步请求电影列表
             item.url = 'http://top.baidu.com'+item.url.slice(1)+'&fr=topcategory_c1';
             debug('保存分类:'+item.name);
             items.push(item);//把此电影加到数组里去
@@ -34,12 +35,12 @@ exports.category = function(url,callback){
     })
 }
 
-exports.category('http://top.baidu.com/category?c=1&fr=topindex',function(err,items){
+/*exports.category('http://top.baidu.com/category?c=1&fr=topindex',function(err,items){
     console.log(items);
-});
+});*/
 
-//读取电影列表
-exports.movie = function(url,callback){
+//读取电影列表  cid分类的ID
+exports.movie = function(url,cid,callback){
     debug('读取电影列表开始');
     request({url:url,encoding:null},function(err,response,body){
         //把GBK的二进制buffer转成utf8字符串
@@ -52,6 +53,7 @@ exports.movie = function(url,callback){
             var $me = $(this);
             //创建每个电影对应的item对象
             var item = {
+                cid:cid,//此电影的分类ID
                 name:$me.text(),//电影的名称
                 url:$me.attr('href')//电影对应的链接
             }
