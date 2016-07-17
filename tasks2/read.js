@@ -24,10 +24,10 @@ exports.category = function(url,callback){
                 url:$me.attr('href')//电影对应的链接 './buzz?b=26&c=1'
             }
             var result = item.url.match(/b=(\d+)/);
-            item._id= result[1];//把ID作为数据库里的文档ID
+            item.id= result[1];//把ID作为数据库里的文档ID
             //此url用来进行下一步请求电影列表
             item.url = 'http://top.baidu.com'+item.url.slice(1)+'&fr=topcategory_c1';
-            debug('保存分类:'+item.name);
+            debug('读取分类:'+item.name);
             items.push(item);//把此电影加到数组里去
         });
         debug('读取电影分类列表结束');
@@ -57,7 +57,7 @@ exports.movie = function(url,cid,callback){
                 name:$me.text(),//电影的名称
                 url:$me.attr('href')//电影对应的链接
             }
-            debug('保存电影:'+item.name);
+            debug('读取电影:'+item.name);
             items.push(item);//把此电影加到数组里去
         });
         debug('读取电影列表结束');
@@ -65,7 +65,7 @@ exports.movie = function(url,cid,callback){
     })
 }
 /*
-
-module.exports('http://top.baidu.com/buzz?b=26&c=1&fr=topcategory_c1',function(err,items){
+exports.movie('http://top.baidu.com/buzz?b=26&c=1&fr=topcategory_c1',26,function(err,items){
     console.log(items);
-})*/
+})
+*/

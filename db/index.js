@@ -10,6 +10,7 @@ exports.Movie = mongoose.model('Movie',new mongoose.Schema({
 }));
 //定义分类的Model
 exports.Category = mongoose.model('Category',new mongoose.Schema({
+    id:String,
     name:String, //电影的名称
     url:String   //电影的URL
 }));

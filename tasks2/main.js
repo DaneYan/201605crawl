@@ -2,6 +2,7 @@ var async = require('async');
 var read = require('./read');
 var save = require('./save');
 var debug = require('debug')('crawl:main');
+var db = require('../db');
 var movies = [];
 //分类列表的URL
 var url = 'http://top.baidu.com/category?c=1&fr=topindex';
@@ -27,7 +28,12 @@ async.series([
     //保存电影的分类
     function(callback){
         debug('保存电影的分类列表');
-        save.category(categories,callback)
+        save.category(categories,function(){
+            db.Category.find({},function(err,docs){
+                categories = docs;
+                callback();
+            });
+        })
     },
 
     function (callback) {
@@ -35,7 +41,7 @@ async.series([
         debug('读取电影的列表');
         async.forEach(categories,function(category,cb){
             read.movie(category.url,category._id,function (err, items) {
-                movies.concat(items);
+                movies = movies.concat(items);
                 cb();
             });
         },callback)
