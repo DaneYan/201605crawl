@@ -1,0 +1,21 @@
+var async = require('async');
+//并行表示多个任务并行执行，同时开始
+//要等所有的任务都执行完毕后才调回调函数
+//总时间等于最长的任务需要的时间
+console.time('cost');//记录开始时间
+async.parallel([
+    function(callback){
+        setTimeout(function(){
+            callback(null,'watchTv');
+        },3000);
+    },
+    function(callback){
+        setTimeout(function(){
+            callback(null,'homeWork');
+        },1000);
+    }
+],function(err,result){
+    console.log(err);
+    console.log(result);
+    console.timeEnd('cost');//记录结束时间
+})

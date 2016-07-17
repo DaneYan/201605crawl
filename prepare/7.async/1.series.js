@@ -1,0 +1,19 @@
+var async = require('async');
+console.time('cost');//记录开始时间
+//串行执行
+async.series([
+    function(callback){
+        setTimeout(function(){
+            callback(null,'watchTv');
+        },3000);
+    },
+    function(callback){
+        setTimeout(function(){
+            callback(null,'homeWork');
+        },1000);
+    }
+],function(err,result){
+    console.log(err);
+    console.log(result);
+    console.timeEnd('cost');//记录结束时间
+})
