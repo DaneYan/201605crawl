@@ -35,6 +35,6 @@ process.stdin.on('data',function(data){
 process.stdin.on('data',function(data){
     exec('git add -A & git commit -m"'+data.toString()+'" & git push origin master',function(err,stdout,stderr){
         console.log('提交完毕');
-        process.exit(0);
+        //process.exit(0);
     });
 });
