@@ -14,6 +14,7 @@ async.auto({
       },2000);
   },
   cook:['rice','egg',function(callback,data){
+      console.error(arguments);
       setTimeout(function(){
           callback(null,data.rice+'+'+data.egg+'+cook');
       },3000);
